@@ -1,0 +1,11 @@
+name: Enterprise DevSecops CICD Pipline
+on:
+ push:
+   branches:
+     - QA
+   paths:
+     - client/**
+     - server/**
+     - .github/workflows/QA-CICD.yml
+jobs:
+  
