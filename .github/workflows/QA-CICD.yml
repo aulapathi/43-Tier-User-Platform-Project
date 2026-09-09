@@ -1,4 +1,5 @@
 name: Enterprise DevSecops CICD Pipline
+
 on:
   push:
     branches:
@@ -120,11 +121,11 @@ jobs:
           name: checkov-dockerfile-report
           path: checkov-dockerfile-report.json
           if-no-files-found: warn
-client-trivy-fs:
+
+  client-trivy-fs:
     name: Client Trivy FS Scan
     runs-on: ubuntu-latest
     needs: gitleaks-scan
-
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
@@ -132,14 +133,14 @@ client-trivy-fs:
       - name: Install Trivy
         uses: aquasecurity/setup-trivy@v0.2.6
         with:
-          version: latest
+          version: "latest"
           cache: true
 
       - name: Verify Trivy installation
         run: |
           trivy --version
           which trivy
-      
+
       - name: Run Trivy FS scan on client (JSON)
         run: |
           trivy fs ./client \
@@ -155,8 +156,8 @@ client-trivy-fs:
             --format table \
             --severity HIGH,CRITICAL \
             --ignore-unfixed \
-            --exit-code 0 > client-trivy-fs-report.txt    
-  
+            --exit-code 0 > client-trivy-fs-report.txt
+
       - name: Upload Client Trivy JSON report
         uses: actions/upload-artifact@v4
         with:
@@ -175,7 +176,6 @@ client-trivy-fs:
     name: Server Trivy FS Scan
     runs-on: ubuntu-latest
     needs: gitleaks-scan
-
     steps:
       - name: Checkout source code
         uses: actions/checkout@v4
@@ -183,7 +183,7 @@ client-trivy-fs:
       - name: Install Trivy
         uses: aquasecurity/setup-trivy@v0.2.6
         with:
-          version: latest
+          version: "latest"
           cache: true
 
       - name: Verify Trivy installation
